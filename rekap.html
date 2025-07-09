@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rekap Penjualan</title>
+    <link rel="stylesheet" href="index.css"> <!-- Reusing general styles -->
+    <link rel="stylesheet" href="rekap.css"> <!-- Specific styles for Rekap page -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="curved-background"></div>
+    <header class="app-header">
+        <div class="header-content">
+            <div class="header-top">
+                <img src="HarcourtsLogo.png" alt="App Logo" class="app-logo">
+                <h1>Form Rekap Penjualan</h1>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html" class="nav-link">Form</a></li>
+                    <li><a href="search.html" class="nav-link">List Unit</a></li>
+                    <!-- Removed Stock Unit link -->
+                    <li><a href="rekap.html" class="nav-link">Rekap Penjualan</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <h2>Rekap Penjualan Unit</h2>
+
+        <!-- Loading Indicator for Rekap page -->
+        <div id="rekapLoadingIndicator" class="loading-indicator">
+            <div class="spinner"></div>
+            <p>Memuat data rekap penjualan...</p>
+        </div>
+
+        <div class="table-container-wrapper" id="rekapTableWrapper" style="display: none;">
+            <button id="expandTableButton" class="expand-button" title="Expand Table">
+                <i class="fas fa-expand"></i>
+            </button>
+            <div class="table-responsive" id="rekapTableContainer">
+                <table class="rekap-table">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Nama Konsumen</th>
+                            <th>Blok/Nomor</th>
+                            <th>Cara Bayar</th>
+                            <th>Harga</th>
+                            <th>Marketing</th>
+                            <th>Kantor</th>
+                            <th>Tgl Hold</th>
+                            <th>Tgl Book</th>
+                            <th>Tgl Akad</th>
+                            <th>Status</th>
+                            <th>Ditambahkan Pada</th>
+                            <th>Terakhir Diperbarui</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rekapTableBody">
+                        <!-- Table rows will be populated here by rekap.js -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Total Penjualan Section -->
+        <div id="totalPenjualanContainer" style="display: none; text-align: right; margin-top: 20px; font-size: 1.2em; font-weight: bold;">
+            Total Penjualan (Rp.): <span id="totalPenjualanValue">0</span>
+        </div>
+    </div>
+
+    <script type="module" src="rekap.js"></script>
+</body>
+</html>

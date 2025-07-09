@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Rekap Penjualan</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="curved-background"></div>
+
+    <header class="app-header">
+        <div class="header-content">
+            <div class="header-top">
+                <img src="HarcourtsLogo.png" alt="App Logo" class="app-logo">
+                <h1>Form Rekap Penjualan</h1>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html" class="nav-link active">Form</a></li>
+                    <li><a href="search.html" class="nav-link">List Unit</a></li>
+                    <li><a href="rekap.html" class="nav-link">Rekap Penjualan</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <h2>Tambah Unit Baru</h2>
+        <form id="listingForm">
+            <div class="form-group">
+                <label for="namaKonsumen">Nama Konsumen</label>
+                <input type="text" id="namaKonsumen" name="namaKonsumen" placeholder="Masukkan nama konsumen" >
+            </div>
+            <div class="form-group">
+                <label for="tipe">Tipe *</label>
+                <input type="text" id="tipe" name="tipe" placeholder="Masukkan tipe unit" required>
+            </div>
+            <div class="form-group">
+                <label for="blok">Blok/Nomor *</label>
+                <input type="text" id="blok" name="blok" placeholder="Masukkan Blok/No unit" required>
+            </div>
+            <div class="form-group">
+                <label for="carabayar">Cara Bayar</label>
+                <select id="carabayar" name="carabayar">
+                    <option value="">Pilih Cara Bayar</option>
+                    <option value="Cash">Cash</option>
+                    <option value="KPR DP">KPR DP</option>
+                    <option value="KPR Subsidi">KPR Subsidi</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="harga">Harga</label>
+                <input type="text" id="harga" name="harga" placeholder="Masukkan harga penjualan" >
+            </div>
+            <div class="form-group">
+                <label for="marketing">Marketing</label>
+                <input type="text" id="marketing" name="marketing" placeholder="Masukkan nama marketing" >
+            </div>
+            <div class="form-group">
+                <label for="kantor">Kantor</label>
+                <input type="text" id="kantor" name="kantor" placeholder="Masukkan nama kantor marketing" >
+            </div>
+            <div class="form-group">
+                <label for="tglhold">Tanggal Hold</label>
+                <input type="date" id="tglhold" name="tglhold" placeholder="Masukkan tanggal hold" >
+            </div>
+            <div class="form-group">
+                <label for="tglbook">Tanggal Book</label>
+                <input type="date" id="tglbook" name="tglbook" placeholder="Masukkan tanggal book" >
+            </div>
+            <div class="form-group">
+                <label for="tglakad">Tanggal Akad</label>
+                <input type="date" id="tglakad" name="tglakad" placeholder="Masukkan tanggal akad" >
+            </div>
+            <button type="submit">Submit Listing</button>
+        </form>
+
+        <hr style="margin: 30px 0;">
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>

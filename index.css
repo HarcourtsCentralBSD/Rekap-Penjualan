@@ -1,0 +1,675 @@
+/* Adjust the body to account for fixed header and new header height */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e0f2f7; /* Lighter blue for the whole page background */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 100vh;
+    margin: 0;
+    padding-top: 150px; /* Increased padding to accommodate the new nav height */
+}
+
+/* MODIFIED: Header Styles for white background */
+.app-header {
+    background-color: white; /* Changed from #007bff to white */
+    color: #333; /* Changed text color to dark gray for visibility on white */
+    padding: 15px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    transition: top 0.3s ease-out;
+}
+
+/* Class to hide the header when scrolling down */
+.app-header.header-hidden {
+    top: -150px; /* Adjusted to hide the full header including nav */
+}
+
+.header-content {
+    display: flex;
+    flex-direction: column; /* Stack header-top and main-nav vertically */
+    justify-content: center;
+    align-items: center;
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.header-top { /* New style for the logo and title wrapper */
+    display: flex;
+    justify-content: center; /* Center logo and title */
+    align-items: center;
+    width: 100%; /* Take full width of header-content */
+    margin-bottom: 10px; /* Space between logo/title and nav */
+}
+
+.app-logo {
+    height: 70px; /* Keep height as before */
+    width: 160px; /* NEW: Set a wider width to make it rectangular */
+    object-fit: cover; /* NEW: Scales the image to cover the element, potentially clipping */
+    margin-right: 15px;
+}
+
+.app-header h1 {
+    margin: 0; /* Override default h1 margin */
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #333; /* Ensure h1 text is dark on white background */
+}
+
+/* NEW: Navigation Bar Styles */
+.main-nav {
+    width: 100%; /* Ensure nav takes full width for centering */
+    display: flex;
+    justify-content: center; /* Center the nav items */
+}
+
+.main-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex; /* Arrange links horizontally */
+    gap: 25px; /* Increased space between navigation items for better look */
+}
+
+.main-nav a {
+    text-decoration: none;
+    color: #007bff; /* Blue color for links */
+    font-weight: bold;
+    padding: 8px 12px; /* Increased padding for better click area and visual */
+    transition: color 0.3s ease, border-bottom 0.3s ease;
+    border-bottom: 2px solid transparent; /* Transparent border for smooth transition */
+    border-radius: 5px; /* Slightly rounded corners for links */
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+    color: #0056b3; /* Darker blue on hover/active */
+    border-bottom: 2px solid #0056b3; /* Underline effect */
+    background-color: #eaf6ff; /* Light background on hover/active */
+}
+
+
+/* Adjust the container's margin-top, now padding-top on body handles space */
+.container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+    margin-top: 0; /* Changed from 30px to 0, or simply remove */
+    margin-bottom: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative; /* Ensure it lays out correctly relative to its position, not fixed */
+}
+
+
+
+h2, h3 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 25px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    position: relative;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: bold;
+}
+
+/* Apply consistent styling to text and date inputs, and select */
+input[type="text"],
+input[type="date"], /* Added for date inputs */
+select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+    /* Ensure consistent font for date input */
+    font-family: Arial, sans-serif;
+    color: #333; /* Default text color */
+}
+
+/* Focus styles for all relevant input types */
+input[type="text"]:focus,
+input[type="date"]:focus, /* Added for date inputs */
+select:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+}
+
+/* Specific styling for date input placeholder/value text color */
+input[type="date"] {
+    color: #333; /* Ensure text is visible */
+}
+/* For browsers that support ::-webkit-datetime-edit (Chrome, Safari) */
+input[type="date"]::-webkit-datetime-edit {
+    color: #333;
+}
+/* For browsers that support ::-webkit-datetime-edit-text (Chrome, Safari) */
+input[type="date"]::-webkit-datetime-edit-text {
+    color: #333;
+}
+/* For browsers that support ::-webkit-datetime-edit-month-field, etc. */
+input[type="date"]::-webkit-datetime-edit-month-field,
+input[type="date"]::-webkit-datetime-edit-day-field,
+input[type="date"]::-webkit-datetime-edit-year-field {
+    color: #333;
+}
+/* For browsers that support ::-webkit-calendar-picker-indicator */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.5) sepia(1) saturate(5) hue-rotate(175deg) brightness(0.8); /* Adjust color of calendar icon */
+    cursor: pointer;
+}
+
+
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.listing-item {
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    cursor: pointer; /* Indicate it's clickable */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smooth hover effects */
+}
+
+.listing-item:hover {
+    transform: translateY(-3px); /* Lift effect on hover */
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15); /* Stronger shadow on hover */
+}
+
+
+.listing-item h4 {
+    color: #007bff;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.listing-item p {
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.listing-item small {
+    color: #777;
+    font-style: italic;
+}
+
+/* --- CSS for Custom Suggestions Dropdown --- */
+.suggestions-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-top: none;
+    border-radius: 0 0 5px 5px;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: none;
+}
+
+.suggestions-dropdown.active {
+    display: block;
+}
+
+.suggestion-item {
+    padding: 10px 15px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+}
+
+.suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.suggestion-item:hover,
+.suggestion-item.highlighted {
+    background-color: #f0f0f0;
+}
+
+/* NEW: Styling for the details inside each suggestion item */
+.suggestion-item-details h5 {
+    margin: 0 0 5px 0;
+    color: #007bff; /* Similar to listing-item h4 */
+}
+.suggestion-item-details p {
+    margin: 0;
+    font-size: 0.9em;
+    color: #666;
+}
+.suggestion-item-details p.ukuran {
+    font-weight: bold;
+    color: #444;
+}
+/* New styles for input with icon */
+.input-with-icon {
+    position: relative; /* For positioning the icon inside */
+    display: flex; /* To keep input and icon on same line, if desired */
+    align-items: center; /* Vertically align */
+}
+
+.input-with-icon input[type="text"] {
+    flex-grow: 1; /* Allow input to take available space */
+    padding-right: 35px; /* Make space for the icon */
+}
+
+.loading-status-icon {
+    position: absolute;
+    right: 10px; /* Position from the right edge of the wrapper */
+    color: #888; /* Default color */
+    font-size: 1.1em; /* Icon size */
+    display: none; /* Hidden by default */
+}
+
+/* Specific states for the icon */
+.loading-status-icon.loading {
+    display: block;
+    color: #007bff; /* Blue for loading */
+    /* Spinner animation */
+    animation: spin 1s linear infinite;
+}
+
+.loading-status-icon.success {
+    display: block;
+    color: #28a745; /* Green for success */
+}
+
+/* Keyframe animation for spinner */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Ensure dropdown still positions correctly relative to input */
+.suggestions-dropdown {
+    position: absolute;
+    top: calc(100% + 5px); /* Adjust top slightly if input has padding, etc. */
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-top: none;
+    border-radius: 0 0 5px 5px;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: none;
+}
+
+
+/* Styles for the header of each listing item, to align title and delete button */
+.listing-item-header {
+    display: flex;
+    justify-content: space-between; /* Puts space between title and button */
+    align-items: center; /* Vertically centers them */
+    margin-bottom: 10px; /* Adds some space below the header */
+    flex-wrap: nowrap; /* NEW: Prevent wrapping if space is tight */
+}
+
+/* Ensure the heading inside the listing item header doesn't have extra margin */
+.listing-item-header h4 {
+    margin: 0; /* Override default h4 margin to align properly */
+    flex-shrink: 1; /* Allow the h4 to shrink if needed, but not completely disappear */
+    min-width: 0; /* Prevents text overflow issues in flex items */
+    white-space: nowrap; /* Keep text on one line */
+    overflow: hidden; /* Hide overflowing text */
+    text-overflow: ellipsis; /* Add ellipsis for overflowing text */
+    padding-right: 10px; /* Space between title and button */
+}
+
+/* Styles for the delete button itself */
+.delete-button {
+    background-color: transparent; /* NEW: Ensure background is transparent if you want no fill */
+    background-image: none; /* NEW: Remove any default browser background-image */
+    border: none;
+    color: #dc3545; /* Red color for delete action */
+    cursor: pointer;
+    font-size: 1.2em; /* Size of the trash icon */
+    padding: 8px; /* NEW: More padding to make it a better click target */
+    line-height: 1; /* NEW: Helps vertically center the icon */
+    display: flex; /* NEW: Use flex for perfect icon centering */
+    justify-content: center; /* NEW: Center icon horizontally */
+    align-items: center; /* NEW: Center icon vertically */
+    width: 32px; /* NEW: Fixed width for consistent button size */
+    height: 32px; /* NEW: Fixed height for consistent button size */
+    border-radius: 50%; /* NEW: Make it circular if desired */
+    flex-shrink: 0; /* NEW: Prevent the button from shrinking */
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out; /* Smooth transitions */
+}
+
+.delete-button:hover {
+    color: #c82333; /* Darker red on hover */
+    background-color: rgba(220, 53, 69, 0.1); /* NEW: Light red background on hover */
+}
+.delete-button:active { /* Optional: Add a pressed state */
+    background-color: rgba(220, 53, 69, 0.2);
+}
+
+
+/* NEW: Modal Overlay Styles */
+.modal-overlay {
+    position: fixed; /* Stays in place even if page scrolls */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black overlay */
+    display: flex; /* Use flexbox to center the modal content */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    z-index: 2000; /* Ensure it's above all other content */
+    opacity: 0; /* Hidden by default */
+    visibility: hidden; /* Hidden by default */
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; /* Smooth transition */
+}
+
+.modal-overlay.active {
+    opacity: 1; /* Show when active */
+    visibility: visible; /* Show when active */
+}
+
+/* NEW: Modal Content Styles */
+.modal-content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 380px; /* Max width for the modal */
+    text-align: center;
+    transform: translateY(-20px); /* Slight lift animation */
+    transition: transform 0.3s ease-in-out;
+}
+
+.modal-overlay.active .modal-content {
+    transform: translateY(0); /* Move to original position when active */
+}
+
+/* Ensure the success message container is visible when the modal is active */
+.modal-overlay.active .modal-success-message {
+    display: block; /* Make the success message visible */
+}
+
+
+.modal-content h3 {
+    margin-top: 0;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.modal-content p {
+    margin-bottom: 15px;
+    color: #555;
+    font-size: 0.95em;
+}
+
+.modal-content input[type="password"] {
+    width: calc(100% - 24px); /* Full width minus padding */
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.modal-content input[type="password"]:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+}
+
+.password-error-message {
+    color: #dc3545; /* Red for error messages */
+    font-size: 0.85em;
+    margin-top: -10px; /* Pull it closer to the input */
+    margin-bottom: 15px;
+    display: none; /* Hidden by default */
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-around; /* Space out the buttons */
+    gap: 15px; /* Gap between buttons */
+    margin-top: 20px;
+}
+
+.modal-buttons button {
+    flex-grow: 1; /* Allow buttons to grow and fill space */
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.modal-buttons .button-primary {
+    background-color: #007bff; /* Primary button color */
+    color: white;
+    border: 1px solid #007bff;
+}
+
+.modal-buttons .button-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+.modal-buttons .button-secondary {
+    background-color: #f0f0f0; /* Light gray for secondary button */
+    color: #333;
+    border: 1px solid #ccc;
+}
+
+.modal-buttons .button-secondary:hover {
+    background-color: #e0e0e0;
+    border-color: #bbb;
+}
+
+/* NEW: Specific style for the Batal button */
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px; /* Space between buttons */
+    margin-top: 20px;
+}
+
+.form-buttons button {
+    flex-grow: 1; /* Allow buttons to grow and fill space */
+    width: auto; /* Override default 100% width for individual buttons in this group */
+}
+
+.form-buttons .button-secondary { /* Reusing button-secondary class */
+    background-color: #dc3545; /* Red for Batal button */
+    color: white;
+    border: 1px solid #dc3545;
+}
+
+.form-buttons .button-secondary:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+
+/* NEW: Styles for the success message container */
+.modal-success-message {
+    text-align: center;
+    padding: 20px 0;
+    /* display: none; */ /* This was the problem, it should not be hidden by default if parent handles visibility */
+}
+
+.modal-success-message .success-icon {
+    font-size: 3em; /* Large tick icon */
+    color: #28a745; /* Green color */
+    margin-bottom: 15px;
+}
+
+.modal-success-message p {
+    font-size: 1.1em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.modal-success-message #closeSuccessMessageButton {
+    background-color: #007bff; /* Blue for "Oke" button */
+    border-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    width: auto; /* Allow button to size itself */
+}
+
+.modal-success-message #closeSuccessMessageButton:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+/* Styles for loading indicator */
+.loading-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    color: #007bff;
+    font-size: 1.1em;
+}
+
+.spinner {
+    border: 4px solid rgba(0, 123, 255, 0.1);
+    border-top: 4px solid #007bff;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 10px;
+}
+
+/* Keyframe animation for spinner (re-defined for clarity, though already exists) */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Previous Status Section Styles (reverted to this) */
+.status-section {
+    background-color: #fff; /* White background for each section */
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px; /* Space between sections */
+    overflow: hidden; /* Ensures rounded corners apply to content */
+    border: 1px solid #ddd; /* Added a subtle border */
+}
+
+.status-header {
+    background-color: #f9f9f9; /* Lighter background for header */
+    padding: 15px 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee; /* Light border at the bottom */
+    transition: background-color 0.3s ease;
+}
+
+.status-header:hover {
+    background-color: #f0f0f0; /* Slightly darker on hover */
+}
+
+.status-header h4 {
+    margin: 0;
+    color: #333; /* Darker text for header */
+    font-size: 1.2em;
+}
+
+.status-header .toggle-arrow {
+    transition: transform 0.3s ease;
+}
+
+.status-content {
+    padding: 15px;
+    display: block; /* Default to visible, can be toggled by JS */
+    /* Removed border-top here as it's handled by status-section border */
+}
+
+
+
+/* Ensure listing items within status-content have proper margins */
+.status-content .listing-item:last-child {
+    margin-bottom: 0;
+}
+
+/* Filter Type Selector Styles (kept as is) */
+.filter-type-selector {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.filter-type-button {
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.filter-type-button:hover {
+    background-color: #e0e0e0;
+}
+
+.filter-type-button.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.filter-type-button.active:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Listing</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="curved-background"></div>
+    <header class="app-header">
+        <div class="header-content">
+            <div class="header-top">
+                <img src="HarcourtsLogo.png" alt="App Logo" class="app-logo">
+                <h1>Form Rekap Penjualan</h1>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html" class="nav-link">Form</a></li>
+                    <li><a href="search.html" class="nav-link">List Unit</a></li>
+                    <li><a href="rekap.html" class="nav-link">Rekap Penjualan</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <button id="goBackToListing" class="back-button"> <i class="fas fa-arrow-left"></i> Kembali ke Daftar Listing</button>
+        <h2>Edit Unit</h2>
+
+        <!-- Loading Indicator -->
+        <div id="loadingIndicator" class="loading-indicator">
+            <div class="spinner"></div>
+            <p>Memuat data...</p>
+        </div>
+
+        <form id="editListingForm" style="display: none;"> <!-- Initially hidden -->
+            <div class="form-group">
+                <label for="namaKonsumen">Nama Konsumen</label>
+                <input type="text" id="namaKonsumen" name="namaKonsumen" placeholder="Masukkan nama konsumen">
+            </div>
+            <div class="form-group">
+                <label for="tipe">Tipe</label>
+                <input type="text" id="tipe" name="tipe" placeholder="Masukkan tipe unit" required>
+            </div>
+            <div class="form-group">
+                <label for="blok">Blok/Nomor</label>
+                <input type="text" id="blok" name="blok" placeholder="Masukkan Blok/No unit" required>
+            </div>
+            <div class="form-group">
+                <label for="carabayar">Cara Bayar</label>
+                <select id="carabayar" name="carabayar">
+                    <option value="">Pilih Cara Bayar</option>
+                    <option value="Cash">Cash</option>
+                    <option value="KPR DP">KPR DP</option>
+                    <option value="KPR Subsidi">KPR Subsidi</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="harga">Harga</label>
+                <input type="text" id="harga" name="harga" placeholder="Masukkan harga penjualan">
+            </div>
+            <div class="form-group">
+                <label for="marketing">Marketing</label>
+                <input type="text" id="marketing" name="marketing" placeholder="Masukkan nama marketing">
+            </div>
+            <div class="form-group">
+                <label for="kantor">Kantor</label>
+                <input type="text" id="kantor" name="kantor" placeholder="Masukkan nama kantor marketing">
+            </div>
+            <div class="form-group">
+                <label for="tglhold">Tanggal Hold</label>
+                <input type="date" id="tglhold" name="tglhold">
+            </div>
+            <div class="form-group">
+                <label for="tglbook">Tanggal Book</label>
+                <input type="date" id="tglbook" name="tglbook">
+            </div>
+            <div class="form-group">
+                <label for="tglakad">Tanggal Akad</label>
+                <input type="date" id="tglakad" name="tglakad">
+            </div>
+            <div class="form-group">
+                <label for="status">Status</label>
+                <input type="text" id="status" name="status" readonly> <!-- Status will be read-only -->
+            </div>
+            <div class="form-buttons">
+                <button type="submit" class="button-primary">Simpan Perubahan</button>
+                <button type="button" id="batalButton" class="button-secondary">Batal</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Generic Success Modal (reused) -->
+    <div id="successModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-success-message">
+                <i class="fas fa-check-circle success-icon"></i>
+                <p id="modalMessage"></p>
+                <button id="closeSuccessModalButton">Oke</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Batal Confirmation Modal -->
+    <div id="batalConfirmModal" class="modal-overlay">
+        <div class="modal-content">
+            <div id="batalConfirmationMessage">
+                <h3>Konfirmasi Pembatalan</h3>
+                <p>Anda yakin ingin membatalkan listing ini?</p>
+                <div class="modal-buttons">
+                    <button id="batalNoButton" class="button-secondary">Tidak</button>
+                    <button id="batalYesButton" class="button-primary">Ya</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="update.js"></script>
+</body>
+</html>

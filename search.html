@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cari & Lihat Listing</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="curved-background"></div>
+    <header class="app-header">
+        <div class="header-content">
+            <div class="header-top">
+                <img src="HarcourtsLogo.png" alt="App Logo" class="app-logo">
+                <h1>Form Rekap Penjualan</h1>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html" class="nav-link">Form</a></li>
+                    <li><a href="search.html" class="nav-link">List Unit</a></li>
+                    <li><a href="rekap.html" class="nav-link">Rekap Penjualan</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="container">
+        <h2>Cari & Lihat Listing</h2>
+        <div class="form-group">
+            <label for="searchNamaListing">Cari Nama Listing:</label>
+            <input type="text" id="searchNamaListing" placeholder="Ketik untuk mencari...">
+        </div>
+        <hr style="margin: 30px 0;">
+        <h3>Daftar Listing</h3>
+
+        <!-- New Filter Type Selector -->
+        <div class="filter-type-selector">
+            <button class="filter-type-button active" data-filter-display-type="status">Status</button>
+            <button class="filter-type-button" data-filter-display-type="tipe">Stock Tipe</button>
+        </div>
+
+        <!-- Loading Indicator for search page -->
+        <div id="searchLoadingIndicator" class="loading-indicator">
+            <div class="spinner"></div>
+            <p>Memuat daftar listing...</p>
+        </div>
+
+        <!-- Container for dynamically generated status/tipe sections -->
+        <div id="dynamicSectionsContainer" style="display: none;">
+            <!-- Sections will be dynamically generated and populated here by search.js -->
+        </div>
+
+        <hr style="margin: 30px 0;">
+    </div>
+    <div id="deleteConfirmModal" class="modal-overlay">
+        <div class="modal-content">
+            <div id="deleteConfirmationForm">
+                <h3>Konfirmasi Hapus Listing</h3>
+                <p>Untuk menghapus listing ini, masukkan kata sandi:</p>
+                <input type="password" id="deletePasswordInput" placeholder="Kata Sandi">
+                <p id="passwordError" class="password-error-message"></p>
+                <div class="modal-buttons">
+                    <button id="cancelDeleteButton" class="button-secondary">Batal</button>
+                    <button id="confirmDeleteButton" class="button-primary">Hapus</button>
+                </div>
+            </div>
+            <div id="deleteSuccessMessage" class="modal-success-message">
+                <i class="fas fa-check-circle success-icon"></i>
+                <p>Listing berhasil dihapus!</p>
+                <button id="closeSuccessMessageButton" class="button-primary">Kembali</button>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="search.js"></script>
+</body>
+</html>
