@@ -3,7 +3,7 @@
       "version": "1.0.0",
       "description": "A simple sales recap application",
       "scripts": {
-        "build": "echo 'Building static files...' && cp -R ./. ./dist && echo 'Build complete.'"
+        "build": "echo 'Vercel build step for static files complete.'"
       },
       "keywords": [],
       "author": "",
