@@ -142,16 +142,3 @@
     transform: rotate(180deg); /* Rotate to indicate collapse */
 }
 
-/* Media query for landscape orientation on small screens when fullscreen */
-@media screen and (max-width: 768px) {
-    .table-container-wrapper.fullscreen {
-        /* Suggest landscape orientation by rotating the content */
-        /* This is a visual suggestion, not a forced rotation of the device */
-        /* Forcing device orientation requires more complex APIs and is not guaranteed */
-        /* transform: rotate(90deg); */
-        /* transform-origin: top left; */
-        /* width: 100vh; */
-        /* height: 100vw; */
-        /* overflow: auto; */
-    }
-}
