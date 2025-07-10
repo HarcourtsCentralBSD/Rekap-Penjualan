@@ -3,7 +3,7 @@
       "version": "1.0.0",
       "description": "A simple sales recap application",
       "scripts": {
-        "build": "rm -rf dist && mkdir -p dist && cp -R ./* dist/ && find dist -type d -name 'dist' -exec rm -rf {} + || true"
+        "build": "echo 'Vercel is processing static files and injecting env vars!'"
       },
       "keywords": [],
       "author": "",
