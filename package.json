@@ -3,9 +3,10 @@
       "version": "1.0.0",
       "description": "A simple sales recap application",
       "scripts": {
-        "build": "echo 'Vercel build step for static files complete.'"
+        "build": "mkdir -p dist && cp -R ./* ./dist/"
       },
       "keywords": [],
       "author": "",
       "license": "ISC"
     }
+    
