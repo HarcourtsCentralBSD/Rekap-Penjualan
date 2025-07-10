@@ -3,7 +3,7 @@
       "version": "1.0.0",
       "description": "A simple sales recap application",
       "scripts": {
-        "build": "mkdir -p dist && cp -R ./* ./dist/"
+        "build": "rm -rf dist && mkdir -p dist && cp -R ./* dist/ && find dist -type d -name 'dist' -exec rm -rf {} + || true"
       },
       "keywords": [],
       "author": "",
