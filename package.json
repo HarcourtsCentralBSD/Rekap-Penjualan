@@ -1,11 +1,12 @@
-{
-  "name": "rekap-penjualan-app",
-  "version": "1.0.0",
-  "description": "A simple sales recap application",
-  "scripts": {
-    "build": "rm -rf build && mkdir build && cp -R ./* build/ && find build -type d -name 'build' -exec rm -rf {} + || true"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
-}
+    {
+      "name": "rekap-penjualan-app",
+      "version": "1.0.0",
+      "description": "A simple sales recap application",
+      "scripts": {
+        "build": "echo 'Building static files...' && cp -R ./. ./dist && echo 'Build complete.'"
+      },
+      "keywords": [],
+      "author": "",
+      "license": "ISC"
+    }
+    
