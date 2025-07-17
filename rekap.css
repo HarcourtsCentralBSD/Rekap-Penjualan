@@ -1,0 +1,166 @@
+/* Styles specific to the Rekap Penjualan page */
+
+.table-responsive {
+    overflow-x: auto; /* Allows horizontal scrolling on small screens */
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    background-color: #fff;
+    /* Added for centering the table itself if it's narrower than its parent */
+    margin-left: auto;
+    margin-right: auto;
+    display: block; /* Ensures margin auto works */
+}
+
+.rekap-table {
+    width: 100%;
+    border-collapse: collapse; /* Collapse borders between cells */
+    min-width: 800px; /* Ensure table doesn't get too narrow on small screens */
+}
+
+.rekap-table th,
+.rekap-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd; /* Light border for rows */
+    font-size: 0.9em;
+}
+
+.rekap-table th {
+    background-color: #007bff; /* Header background blue */
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    position: sticky; /* Keep headers visible when scrolling horizontally */
+    top: 0;
+    z-index: 1; /* Ensure header is above content */
+}
+
+/* Removed the hover effect for table rows */
+
+/* Status coloring for cells (kept for individual cell styling if needed, but row takes precedence) */
+.status-cell {
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 5px;
+    text-align: center;
+    white-space: nowrap; /* Prevent status text from wrapping */
+}
+
+/* Status coloring for entire rows */
+.status-free-row {
+    background-color: transparent; /* No color for free */
+    color: #333; /* Default text color */
+}
+
+.status-hold-row {
+    background-color: #FFFACD; /* Lemon Chiffon - light yellow */
+    color: #8B4513; /* SaddleBrown - darker text for contrast */
+}
+
+.status-naik-booking-row {
+    background-color: #ADD8E6; /* Light Blue */
+    color: #000080; /* Navy - darker text for contrast */
+}
+
+.status-sudah-akad-row { /* New class for 'sudah akad' status */
+    background-color: #E6E6FA; /* Lavender - light purple */
+    color: #4B0082; /* Indigo - darker text for contrast */
+}
+
+.status-batal-row { /* New class for 'batal' status */
+    background-color: #FFCDD2; /* Light Red (Red 100 from Material Design) */
+    color: #B71C1C; /* Dark Red for contrast */
+}
+
+/* Styling for the total penjualan container */
+#totalPenjualanContainer {
+    margin-top: 20px;
+    font-size: 1.1em; /* Slightly smaller font for individual totals */
+    font-weight: bold;
+    width: 100%;
+    max-width: 800px; /* Match table width for alignment */
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+    padding: 0 15px;
+    background-color: #fff; /* White background for the total section */
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* Subtle shadow */
+    padding: 15px; /* Add padding inside the container */
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between; /* Puts label on left, value on right */
+    padding: 5px 0;
+    border-bottom: 1px dashed #eee; /* Subtle separator */
+}
+
+.total-row:last-of-type {
+    border-bottom: none; /* No border on the last one */
+}
+
+.total-row span {
+    color: #0056b3; /* Blue color for the values */
+    font-size: 1.1em; /* Slightly larger for values */
+}
+
+.total-row.main-total {
+    font-size: 1.1em; /* Larger font for overall total */
+    border-top: 2px solid #007bff; /* Stronger line above overall total */
+    padding-top: 10px;
+    margin-top: 10px;
+    color: #007bff; /* Blue text for overall total */
+}
+
+/* Expand button styling */
+.expand-button {
+    position: absolute;
+    top: 10px; /* Adjust as needed */
+    right: 10px; /* Adjust as needed */
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%; /* Circular button */
+    width: 36px;
+    height: 36px;
+    font-size: 1.1em;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: background-color 0.3s ease;
+    z-index: 10; /* Ensure it's above the table content */
+}
+
+.expand-button:hover {
+    background-color: #0056b3;
+}
+
+.expand-button .fa-compress { /* Icon for collapse state */
+    transform: rotate(180deg); /* Rotate to indicate collapse */
+}
+
+/* Export button styling */
+.export-button {
+    background-color: #28a745; /* Green color for export */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-bottom: 15px; /* Space below the button */
+    display: block; /* Make it a block element */
+    width: fit-content; /* Fit content width */
+    margin-left: auto; /* Center the button */
+    margin-right: auto; /* Center the button */
+    transition: background-color 0.3s ease;
+}
+
+.export-button:hover {
+    background-color: #218838; /* Darker green on hover */
+}

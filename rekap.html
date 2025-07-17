@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rekap Penjualan</title>
+    <link rel="stylesheet" href="index.css"> <!-- Reusing general styles -->
+    <link rel="stylesheet" href="rekap.css"> <!-- Specific styles for Rekap page -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="curved-background"></div>
+    <header class="app-header">
+        <div class="header-content">
+            <div class="header-top">
+                <a href="index.html"> <!-- Added anchor tag around logo -->
+                    <img src="HarcourtsLogo.png" alt="App Logo" class="app-logo">
+                </a>
+                <h1 id="mainHeaderTitle"></h1>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="form.html" class="nav-link">Form</a></li>
+                    <li><a href="search.html" class="nav-link">Listing</a></li> <!-- Changed to Listing -->
+                    <li><a href="rekap.html" class="nav-link active">Rekap</a></li> <!-- Changed to Rekap -->
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <h2>Rekap Penjualan Unit</h2>
+
+        <!-- Export Button -->
+        <button id="exportCsvButton" class="export-button">Export ke CSV</button>
+
+        <!-- Loading Indicator for Rekap page -->
+        <div id="rekapLoadingIndicator" class="loading-indicator">
+            <div class="spinner"></div>
+            <p>Memuat data rekap penjualan...</p>
+        </div>
+
+        <div class="table-container-wrapper" id="rekapTableWrapper" style="display: none;">
+            <button id="expandTableButton" class="expand-button" title="Expand Table">
+                <i class="fas fa-expand"></i>
+            </button>
+            <div class="table-responsive" id="rekapTableContainer">
+                <table class="rekap-table">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Nama Konsumen</th>
+                            <th>Tipe</th> <!-- Added Tipe header for CSV export context -->
+                            <th>Blok/Nomor</th>
+                            <th>Cara Bayar</th>
+                            <th>Harga</th>
+                            <th>Marketing</th>
+                            <th>Kantor</th>
+                            <th>Tgl Hold</th>
+                            <th>Tgl Book</th>
+                            <th>Tgl Akad</th>
+                            <th>Status</th>
+                            <th>Ditambahkan Pada</th>
+                            <th>Terakhir Diperbarui</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rekapTableBody">
+                        <!-- Table rows will be populated here by rekap.js -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Total Penjualan Section -->
+        <div id="totalPenjualanContainer" style="display: none; margin-top: 20px;">
+            <div class="total-row">
+                Total Penjualan (Sudah Akad): <span id="totalSudahAkadValue">0</span>
+            </div>
+            <div class="total-row">
+                Total Penjualan (Naik Booking): <span id="totalNaikBookingValue">0</span>
+            </div>
+            <div class="total-row">
+                Total Penjualan (Hold): <span id="totalHoldValue">0</span>
+            </div>
+            <div class="total-row main-total">
+                Total Penjualan Keseluruhan: <span id="totalOverallSalesValue">0</span>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="rekap.js"></script>
+</body>
+</html>

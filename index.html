@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pilih Project</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="curved-background"></div>
+
+    <header class="app-header">
+        <div class="header-content">
+            <div class="header-top">
+                <img src="HarcourtsLogo.png" alt="App Logo" class="app-logo">
+                <h1>Rekap Penjualan</h1>
+            </div>
+            
+        </div>
+    </header>
+
+    <div class="container">
+        <h2>Pilih Project</h2>
+
+        <div class="form-group">
+            <button id="addNewProjectButton" class="button-primary">Tambah Project Baru</button>
+        </div>
+
+        <hr style="margin: 30px 0;">
+
+        <h3>Daftar Project</h3>
+        <div id="projectsContainer" class="projects-grid">
+            <!-- Project buttons will be loaded here by index.js -->
+            <p>Memuat daftar project...</p>
+        </div>
+    </div>
+
+    <!-- Add Project Modal -->
+    <div id="addProjectModal" class="modal-overlay">
+        <div class="modal-content">
+            <h3>Tambah Project Baru</h3>
+            <div class="form-group">
+                <label for="newProjectName">Nama Project</label>
+                <input type="text" id="newProjectName" placeholder="Masukkan nama project baru" required>
+            </div>
+            <p id="addProjectError" class="password-error-message" style="display: none;"></p>
+            <div class="modal-buttons">
+                <button id="cancelAddProjectButton" class="button-secondary">Batal</button>
+                <button id="confirmAddProjectButton" class="button-primary">Tambah</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Generic Success/Error Modal (reused from other pages) -->
+    <div id="successModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-success-message">
+                <i class="fas fa-check-circle success-icon"></i>
+                <p id="modalMessage"></p>
+                <button id="closeSuccessModalButton">Oke</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Project Confirmation Modal -->
+    <div id="deleteProjectConfirmModal" class="modal-overlay">
+        <div class="modal-content">
+            <div id="deleteProjectConfirmationForm">
+                <h3>Konfirmasi Hapus Project</h3>
+                <p>Anda yakin ingin menghapus project "<span id="projectToDeleteName"></span>"?</p>
+                <p>Untuk menghapus, masukkan kata sandi:</p>
+                <input type="password" id="deleteProjectPasswordInput" placeholder="Kata Sandi">
+                <p id="deleteProjectPasswordError" class="password-error-message"></p>
+                <div class="modal-buttons">
+                    <button id="cancelDeleteProjectButton" class="button-secondary">Tidak</button>
+                    <button id="confirmDeleteProjectButton" class="button-primary">Ya</button>
+                </div>
+            </div>
+            <div id="deleteProjectSuccessMessage" class="modal-success-message" style="display: none;">
+                <i class="fas fa-check-circle success-icon"></i>
+                <p>Project berhasil dihapus!</p>
+                <button id="closeDeleteProjectSuccessButton" class="button-primary">Oke</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="index.js"></script>
+</body>
+</html>
