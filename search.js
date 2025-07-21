@@ -1,7 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 import { getFirestore, collection, onSnapshot, query, doc, deleteDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
-import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+// Removed getAuth, signInAnonymously, onAuthStateChanged as per request
+// import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
 // Your web app's Firebase configuration (hardcoded as requested)
 const firebaseConfig = {
@@ -17,7 +18,8 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const auth = getAuth(app);
+// Removed auth initialization as it's no longer used for explicit authentication
+// const auth = getAuth(app);
 
 // Get projectId from URL
 const urlParams = new URLSearchParams(window.location.search);
@@ -46,19 +48,20 @@ const predefinedStatusOrder = ['free', 'hold', 'naik booking', 'sudah akad', 'ba
 
 let currentDisplayType = 'status';
 
-let isAuthReady = false;
+// Removed authentication state listener as it's no longer needed for explicit authentication
+// let isAuthReady = false;
+// onAuthStateChanged(auth, (user) => {
+//     if (user) {
+//         console.log("search.js: Authenticated user for delete operations.");
+//     } else {
+//         console.log("search.js: No user, attempting anonymous sign-in for delete operations.");
+//         signInAnonymously(auth).catch(error => {
+//             console.error("search.js: Anonymous sign-in failed:", error);
+//         });
+//     }
+//     isAuthReady = true;
+// });
 
-onAuthStateChanged(auth, (user) => {
-    if (user) {
-        console.log("search.js: Authenticated user for delete operations.");
-    } else {
-        console.log("search.js: No user, attempting anonymous sign-in for delete operations.");
-        signInAnonymously(auth).catch(error => {
-            console.error("search.js: Anonymous sign-in failed:", error);
-        });
-    }
-    isAuthReady = true;
-});
 // Get the main header title element
 const mainHeaderTitle = document.getElementById('mainHeaderTitle');
 
@@ -288,26 +291,12 @@ function renderSections(listingsToDisplay) {
                 event.stopPropagation();
                 listingToDeleteId = event.currentTarget.dataset.id;
 
-                if (!auth.currentUser) {
-                    console.warn("User not authenticated. Attempting anonymous sign-in before delete.");
-                    signInAnonymously(auth).then(() => {
-                        console.log("Anonymous user signed in, proceeding with delete confirmation.");
-                        deletePasswordInput.value = '';
-                        passwordError.style.display = 'none';
-                        deleteConfirmationForm.style.display = 'block';
-                        deleteSuccessMessage.style.display = 'none';
-                        deleteConfirmModal.classList.add('active');
-                    }).catch(error => {
-                        console.error("Anonymous sign-in failed, cannot proceed with delete:", error);
-                        alert("Gagal mengautentikasi untuk menghapus. Silakan coba lagi.");
-                    });
-                } else {
-                    deletePasswordInput.value = '';
-                    passwordError.style.display = 'none';
-                    deleteConfirmationForm.style.display = 'block';
-                    deleteSuccessMessage.style.display = 'none';
-                    deleteConfirmModal.classList.add('active');
-                }
+                // Directly show the delete confirmation modal without authentication check
+                deletePasswordInput.value = '';
+                passwordError.style.display = 'none';
+                deleteConfirmationForm.style.display = 'block';
+                deleteSuccessMessage.style.display = 'none';
+                deleteConfirmModal.classList.add('active');
             });
         }
     });
