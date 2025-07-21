@@ -23,8 +23,8 @@ const projectId = urlParams.get('projectId');
 
 const rekapTableBody = document.getElementById('rekapTableBody');
 const rekapLoadingIndicator = document.getElementById('rekapLoadingIndicator');
-const rekapTableContainer = document.getElementById('rekapTableContainer');
-const rekapTableWrapper = document.getElementById('rekapTableWrapper');
+const rekapTableContainer = document.getElementById('rekapTableContainer'); // This is the div containing the table
+const rekapTableWrapper = document.getElementById('rekapTableWrapper'); // This is the original parent of rekapTableContainer
 const totalPenjualanContainer = document.getElementById('totalPenjualanContainer');
 
 const totalSudahAkadValue = document.getElementById('totalSudahAkadValue');
@@ -35,6 +35,18 @@ const totalOverallSalesValue = document.getElementById('totalOverallSalesValue')
 const expandTableButton = document.getElementById('expandTableButton');
 const exportCsvButton = document.getElementById('exportCsvButton');
 const mainHeaderTitle = document.getElementById('mainHeaderTitle');
+
+// New: Get references to the fullscreen overlay and the new expanded modal container
+const fullscreenOverlay = document.getElementById('fullscreenOverlay');
+const expandedModalContainer = document.getElementById('expandedModalContainer');
+const modalContentWrapper = expandedModalContainer.querySelector('.modal-content-wrapper'); // The div inside the modal where table will go
+// New: Get reference to the new close button
+const closeExpandedTableButton = document.getElementById('closeExpandedTableButton');
+
+
+// Store the original parent of rekapTableContainer
+const originalRekapTableContainerParent = rekapTableContainer.parentNode;
+
 
 let allFetchedListingsForCsv = [];
 
@@ -134,6 +146,16 @@ function parseHarga(hargaString) {
     return isNaN(value) ? 0 : value;
 }
 
+// New: Function to format number as IDR currency
+function formatToIDR(amount) {
+    return new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    }).format(amount);
+}
+
 
 function populateRekapTable(listings) {
     rekapTableBody.innerHTML = '';
@@ -141,6 +163,12 @@ function populateRekapTable(listings) {
     let totalNaikBooking = 0;
     let totalHold = 0;
     let totalOverallSales = 0;
+
+    // New: Counters for each status
+    let countSudahAkad = 0;
+    let countNaikBooking = 0;
+    let countHold = 0;
+    let countFree = 0; // New: Counter for free units
 
     if (listings.length === 0) {
         rekapTableBody.innerHTML = '<tr><td colspan="14" style="text-align: center;">Tidak ada data penjualan ditemukan.</td></tr>';
@@ -156,18 +184,22 @@ function populateRekapTable(listings) {
         switch (status) {
             case 'free':
                 statusClass = 'status-free-row';
+                countFree++; // Increment free count
                 break;
             case 'hold':
                 statusClass = 'status-hold-row';
                 totalHold += harga;
+                countHold++; // Increment hold count
                 break;
             case 'naik booking':
                 statusClass = 'status-naik-booking-row';
                 totalNaikBooking += harga;
+                countNaikBooking++; // Increment naik booking count
                 break;
             case 'sudah akad':
                 statusClass = 'status-sudah-akad-row';
                 totalSudahAkad += harga;
+                countSudahAkad++; // Increment sudah akad count
                 break;
             case 'batal':
                 statusClass = 'status-batal-row';
@@ -202,7 +234,7 @@ function populateRekapTable(listings) {
             <td>${listing.tipe || 'N/A'}</td>
             <td>${listing.blok || 'N/A'}</td>
             <td>${listing.carabayar || 'N/A'}</td>
-            <td>${listing.harga || 'N/A'}</td>
+            <td>${formatToIDR(harga)}</td> <!-- Formatted price -->
             <td>${listing.marketing || 'N/A'}</td>
             <td>${listing.kantor || 'N/A'}</td>
             <td>${formatDate(listing.tglhold)}</td>
@@ -214,10 +246,33 @@ function populateRekapTable(listings) {
         `;
     });
 
-    totalSudahAkadValue.textContent = totalSudahAkad.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
-    totalNaikBookingValue.textContent = totalNaikBooking.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
-    totalHoldValue.textContent = totalHold.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
-    totalOverallSalesValue.textContent = totalOverallSales.toLocaleString('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+    // Update text content to include counts
+    totalSudahAkadValue.textContent = `${formatToIDR(totalSudahAkad)} (${countSudahAkad})`;
+    totalNaikBookingValue.textContent = `${formatToIDR(totalNaikBooking)} (${countNaikBooking})`;
+    totalHoldValue.textContent = `${formatToIDR(totalHold)} (${countHold})`;
+    
+    // Remove existing Free Unit row if it exists before appending a new one
+    const existingFreeUnitRow = document.getElementById('freeUnitRow');
+    if (existingFreeUnitRow) {
+        existingFreeUnitRow.remove();
+    }
+
+    // New: Add Free Unit count
+    const freeUnitRow = document.createElement('div');
+    freeUnitRow.classList.add('total-row');
+    freeUnitRow.id = 'freeUnitRow'; // Add an ID for easy removal/update
+    freeUnitRow.innerHTML = `
+        Free Unit: <span id="totalFreeUnitValue">(${countFree})</span>
+    `;
+    // Append before the main-total row if it exists, otherwise at the end
+    const mainTotalRow = totalPenjualanContainer.querySelector('.main-total');
+    if (mainTotalRow) {
+        totalPenjualanContainer.insertBefore(freeUnitRow, mainTotalRow);
+    } else {
+        totalPenjualanContainer.appendChild(freeUnitRow);
+    }
+
+    totalOverallSalesValue.textContent = formatToIDR(totalOverallSales);
 
     totalPenjualanContainer.style.display = 'block';
 }
@@ -247,7 +302,7 @@ function exportToCsv(data) {
             `"${(listing.tipe || '').replace(/"/g, '""')}"`,
             `"${(listing.blok || '').replace(/"/g, '""')}"`,
             `"${(listing.carabayar || '').replace(/"/g, '""')}"`,
-            `"${(listing.harga || '').replace(/"/g, '""')}"`,
+            `"${formatToIDR(parseHarga(listing.harga))}"`, // Formatted price for CSV
             `"${(listing.marketing || '').replace(/"/g, '""')}"`,
             `"${(listing.kantor || '').replace(/"/g, '""')}"`,
             `"${formatDateForCsv(listing.tglhold)}"`,
@@ -282,14 +337,14 @@ function exportToCsv(data) {
 if (!projectId) {
     if (rekapLoadingIndicator) rekapLoadingIndicator.style.display = 'none';
     if (rekapTableWrapper) rekapTableWrapper.innerHTML = '<p style="text-align: center; color: red;">Error: Proyek belum dipilih. Silakan kembali ke halaman utama untuk memilih proyek.</p>';
-    if (rekapTableWrapper) rekapTableWrapper.style.display = 'block';
+    if (rekapTableWrapper) rekapTableWrapper.style.display = 'none'; // Hide original wrapper if no project
     if (totalPenjualanContainer) totalPenjualanContainer.style.display = 'none';
 } else {
     if (rekapLoadingIndicator) {
         rekapLoadingIndicator.style.display = 'flex';
     }
     if (rekapTableWrapper) {
-        rekapTableWrapper.style.display = 'none';
+        rekapTableWrapper.style.display = 'none'; // Ensure it's hidden while loading
     }
     if (totalPenjualanContainer) {
         totalPenjualanContainer.style.display = 'none';
@@ -327,7 +382,8 @@ if (!projectId) {
             rekapLoadingIndicator.style.display = 'none';
         }
         if (rekapTableWrapper) {
-            rekapTableWrapper.style.display = 'block';
+            // After data is loaded and populated, show the wrapper in its normal block display
+            rekapTableWrapper.style.display = 'block'; 
         }
     }, (error) => {
         console.error("Error fetching rekap data:", error);
@@ -341,36 +397,44 @@ if (!projectId) {
     });
 }
 
-
+// Event listener for the original expand button
 expandTableButton.addEventListener('click', () => {
-    rekapTableWrapper.classList.toggle('fullscreen');
+    // This button will ONLY handle expanding the view
+    expandedModalContainer.classList.add('active'); // Add active class for CSS display
+    expandedModalContainer.style.display = 'flex'; // Explicitly show as flex
+    fullscreenOverlay.style.display = 'block'; // Show overlay
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    document.body.classList.add('modal-active'); // Add class to body to hide other elements
+
+    // Move the table container into the modal
+    modalContentWrapper.appendChild(rekapTableContainer);
+    rekapTableWrapper.style.display = 'none'; // Hide the original table wrapper
+
+    // Change the icon of the original expand button (though it's hidden, good practice)
     const icon = expandTableButton.querySelector('i');
-    if (rekapTableWrapper.classList.contains('fullscreen')) {
-        icon.classList.remove('fa-expand');
-        icon.classList.add('fa-compress');
-        if (rekapTableWrapper.requestFullscreen) {
-            rekapTableWrapper.requestFullscreen();
-        } else if (rekapTableWrapper.mozRequestFullScreen) {
-            rekapTableWrapper.mozRequestFullScreen();
-        } else if (rekapTableWrapper.webkitRequestFullscreen) {
-            rekapTableWrapper.webkitRequestFullscreen();
-        } else if (rekapTableWrapper.msRequestFullscreen) {
-            rekapTableWrapper.msRequestFullscreen();
-        }
-    } else {
-        icon.classList.remove('fa-compress');
-        icon.classList.add('fa-expand');
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        } else if (document.mozCancelFullScreen) {
-            document.mozCancelFullScreen();
-        } else if (document.webkitExitFullscreen) {
-            document.webkitExitFullscreen();
-        } else if (document.msExitFullscreen) {
-            document.msExitFullscreen();
-        }
-    }
+    icon.classList.remove('fa-expand');
+    icon.classList.add('fa-compress');
 });
+
+// New Event listener for the close button within the expanded modal
+closeExpandedTableButton.addEventListener('click', () => {
+    // This button will ONLY handle collapsing the view
+    expandedModalContainer.classList.remove('active'); // Remove active class
+    expandedModalContainer.style.display = 'none'; // Hide modal
+    fullscreenOverlay.style.display = 'none'; // Hide overlay
+    document.body.style.overflow = ''; // Restore background scrolling
+    document.body.classList.remove('modal-active'); // Remove class from body
+
+    // Move the table container back to its original place
+    originalRekapTableContainerParent.appendChild(rekapTableContainer);
+    rekapTableWrapper.style.display = 'block'; // Show the original table wrapper
+
+    // Reset the icon of the original expand button
+    const icon = expandTableButton.querySelector('i');
+    icon.classList.remove('fa-compress');
+    icon.classList.add('fa-expand');
+});
+
 
 exportCsvButton.addEventListener('click', () => {
     exportToCsv(allFetchedListingsForCsv);

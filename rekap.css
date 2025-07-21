@@ -13,18 +13,115 @@
     display: block; /* Ensures margin auto works */
 }
 
+/* New: Styles for the semi-transparent background overlay */
+.fullscreen-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    z-index: 9998; /* Below the expanded table but above other content */
+    display: none; /* Hidden by default */
+}
+
+/* New: Base style for rekapTableWrapper (hidden by default, shown by JS after load) */
+.table-container-wrapper {
+    display: none; /* Hidden by default, JS will set to 'block' or 'flex' */
+}
+
+/* New: Styles for the new expanded table modal container */
+.expanded-modal-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 95vw; /* Takes 95% of viewport width */
+    max-width: 1200px; /* Max width for larger screens */
+    height: 95vh; /* Takes 95% of viewport height */
+    max-height: 900px; /* Max height for larger screens */
+    background-color: #f8f9fa; /* A light background for the expanded view */
+    z-index: 9999; /* Ensures it's on top of other content */
+    padding: 20px; /* Add some padding around the content */
+    box-sizing: border-box; /* Includes padding in the element's total width and height */
+    display: flex; /* Use flexbox for internal layout */
+    flex-direction: column; /* Stacks children vertically */
+    border-radius: 12px; /* Rounded corners for a modal look */
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4); /* Stronger shadow for depth */
+    transition: all 0.3s ease-in-out; /* Smooth transition for appearance */
+    overflow: hidden; /* Hide overflow on the modal itself */
+    display: none; /* Hidden by default, shown by JS */
+}
+
+/* New: Wrapper for the table content inside the modal, making it scrollable */
+.expanded-modal-container .modal-content-wrapper {
+    flex-grow: 1; /* Allows it to fill available vertical space */
+    overflow-y: auto; /* Enables vertical scrolling for the table content */
+    overflow-x: auto; /* Ensures horizontal scrolling is also handled */
+    min-height: 0; /* Crucial for flex items with overflow */
+    padding-bottom: 20px; /* Add padding at the bottom of the scrollable area */
+}
+
+/* New: Hide the original table wrapper when the modal is active */
+body.modal-active .table-container-wrapper {
+    display: none !important;
+}
+
+/* New: Hide the totalPenjualanContainer when the modal is active */
+body.modal-active #totalPenjualanContainer {
+    display: none !important;
+}
+
+/* Adjust table header sticky position inside the expanded modal */
+.expanded-modal-container .rekap-table th {
+    position: sticky; /* Keep headers visible when scrolling */
+    top: 0; /* Ensure headers remain sticky at the top of the scrollable area */
+    z-index: 2; /* Ensure header is above table content during scroll */
+    background-color: #007bff; /* Re-apply header background in case it's overridden */
+    /* New: Specific font size for expanded headers */
+    font-size: clamp(8px, 1.8vw, 15px); /* Responsive font size: min 8px, fluid 1.8vw, max 15px */
+    white-space: nowrap; /* Prevent headers from wrapping */
+    padding: 10px 8px; /* Adjusted padding for better fit */
+}
+
+/* New: Style for the close button within the expanded modal */
+.close-modal-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #dc3545; /* Red color for close */
+    color: white;
+    border: none;
+    border-radius: 50%; /* Circular button */
+    width: 36px;
+    height: 36px;
+    font-size: 1.1em;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: background-color 0.3s ease;
+    z-index: 10001; /* Ensure it's above everything */
+}
+
+.close-modal-button:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+
+
 .rekap-table {
     width: 100%;
     border-collapse: collapse; /* Collapse borders between cells */
-    min-width: 800px; /* Ensure table doesn't get too narrow on small screens */
+    /* NO min-width HERE - this rule applies to both expanded and unexpanded */
 }
 
 .rekap-table th,
 .rekap-table td {
-    padding: 12px 15px;
+    padding: 12px 15px; /* Default padding for unexpanded table */
     text-align: left;
     border-bottom: 1px solid #ddd; /* Light border for rows */
-    font-size: 0.9em;
+    font-size: 0.9em; /* Default font size for unexpanded table */
 }
 
 .rekap-table th {
@@ -35,9 +132,59 @@
     position: sticky; /* Keep headers visible when scrolling horizontally */
     top: 0;
     z-index: 1; /* Ensure header is above content */
+    /* No font-size or white-space here for unexpanded table */
 }
 
-/* Removed the hover effect for table rows */
+/* New: Smaller font for table data cells in expanded view on smaller screens */
+.expanded-modal-container .rekap-table td {
+    font-size: clamp(7px, 1.5vw, 14px); /* Responsive font size: min 7px, fluid 1.5vw, max 14px */
+    padding: 10px 8px; /* Adjusted padding for better fit */
+}
+
+/* Media query for very small screens (e.g., iPhone SE in landscape) */
+@media screen and (max-width: 480px) and (orientation: landscape) {
+    .expanded-modal-container .rekap-table th {
+        font-size: clamp(7px, 2.5vw, 12px); /* Even smaller for very narrow landscape views */
+        padding: 6px 8px; /* Adjust padding */
+    }
+    .expanded-modal-container .rekap-table td {
+        font-size: clamp(6px, 2vw, 11px); /* Adjust data cell font size */
+        padding: 6px 8px;
+    }
+}
+
+/* Media query for portrait orientation on small screens (phones) - This is for the rotation */
+@media screen and (orientation: portrait) and (max-width: 768px) {
+    .expanded-modal-container.active {
+        /* Rotate the entire modal container to appear landscape */
+        transform: translate(-50%, -50%) rotate(90deg);
+        /* Adjust dimensions to fit the new orientation */
+        width: 95vh; /* New width is based on viewport height */
+        height: 95vw; /* New height is based on viewport width */
+        /* Ensure it's still centered */
+        top: 50%;
+        left: 50%;
+        /* Adjust padding for rotated view if needed */
+        padding: 10px;
+    }
+
+    /* Counter-rotate buttons inside the rotated container */
+    .expanded-modal-container.active .close-modal-button {
+        transform: rotate(-90deg); /* Rotate back to normal orientation */
+        /* Adjust position after counter-rotation */
+        top: 20px; /* Example, might need fine-tuning */
+        right: 20px; /* Example, might need fine-tuning */
+    }
+
+    /* If you had other buttons inside the modal, counter-rotate them too */
+    /* For example, if export button was inside the modal: */
+    /* .expanded-modal-container.active .export-button {
+        transform: rotate(-90deg);
+        top: 20px;
+        left: 20px;
+    } */
+}
+
 
 /* Status coloring for cells (kept for individual cell styling if needed, but row takes precedence) */
 .status-cell {
@@ -136,6 +283,8 @@
     z-index: 10; /* Ensure it's above the table content */
 }
 
+/* No specific positioning for expand button when modal is open, as it's outside */
+
 .expand-button:hover {
     background-color: #0056b3;
 }
@@ -160,6 +309,8 @@
     margin-right: auto; /* Center the button */
     transition: background-color 0.3s ease;
 }
+
+/* No specific positioning for export button when modal is open, as it's outside */
 
 .export-button:hover {
     background-color: #218838; /* Darker green on hover */

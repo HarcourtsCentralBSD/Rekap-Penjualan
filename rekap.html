@@ -9,6 +9,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+    <!-- New: Semi-transparent background overlay for the expanded table -->
+    <div class="fullscreen-overlay" id="fullscreenOverlay"></div>
+
+    <!-- New: Container for the expanded table (modal-like) -->
+    <div class="expanded-modal-container" id="expandedModalContainer">
+        <!-- New: Close button for the expanded table -->
+        <button id="closeExpandedTableButton" class="close-modal-button" title="Close Expanded View">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="modal-content-wrapper">
+            <!-- The rekapTableContainer will be moved here by JavaScript -->
+        </div>
+    </div>
+
     <div class="curved-background"></div>
     <header class="app-header">
         <div class="header-content">
@@ -40,7 +54,8 @@
             <p>Memuat data rekap penjualan...</p>
         </div>
 
-        <div class="table-container-wrapper" id="rekapTableWrapper" style="display: none;">
+        <!-- Original table wrapper (will be hidden when expanded modal is shown) -->
+        <div class="table-container-wrapper" id="rekapTableWrapper">
             <button id="expandTableButton" class="expand-button" title="Expand Table">
                 <i class="fas fa-expand"></i>
             </button>
